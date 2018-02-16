@@ -121,7 +121,10 @@ def game_state_machine(stdscr, state_machine = 0):
             elif state_transition:    
                 drawme.draw_level   (stdscr)
 
-            curlevel.draw_exits   (stdscr, myhero)
+            if levelindex > 0:
+                curlevel.draw_entrance(stdscr, myhero)
+
+            curlevel.draw_exit    (stdscr, myhero)
             curlevel.draw_monsters(stdscr, myhero)
 
             # Move and draw hero

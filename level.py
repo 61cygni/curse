@@ -183,7 +183,8 @@ class Level:
             monster.move(myhero)
             monster.display(stdscr)
             
-    def draw_exits(self, stdscr, myhero):    
+    def draw_exit(self, stdscr, myhero):    
             stdscr.addstr(self.exity, self.exitx,    self.exitchar, curses.color_pair(10))
+    def draw_entrance(self, stdscr, myhero):    
             stdscr.addstr(self.starty, self.startx, self.startchar, curses.color_pair(9))
 
