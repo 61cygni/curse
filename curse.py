@@ -37,15 +37,17 @@ def game_state_machine(stdscr, state_machine = 0):
 
     curses.curs_set(0)
 
+    msg_queue = display.ActionMessage(stdscr)
+
     # generate 100 levels
     levels = []
     for i in range(0, 99):
-        levels.append(level.Level(stdscr))
+        levels.append(level.Level(stdscr, msg_queue))
 
     levelindex = 0
     curlevel = levels[levelindex]    
     
-    myhero = hero.Hero(curlevel)
+    myhero    = hero.Hero(curlevel)
 
     # Initialization
     stdscr.clear()
@@ -113,6 +115,13 @@ def game_state_machine(stdscr, state_machine = 0):
                 if state_transition :
                     splash.draw_intro_sequence(stdscr)
 
+        # --
+        # Main game engine 
+        # --
+
+        msg_queue.run()
+
+
         if state_machine == 2:    
 
             if not drawme:
@@ -136,10 +145,10 @@ def game_state_machine(stdscr, state_machine = 0):
             # combat loop!
             for monster in curlevel.monsters:
                 if monster.can_attack(myhero):
-                    if monster.attack(myhero, stdscr):
+                    if monster.attack(myhero):
                         monster.clear(stdscr)
+                        monster.display_killed()
                         curlevel.monsters.remove(monster)
-                        #message.display_monster_killed(stdscr, monster)
 
             # make sure only check that hero descends/ascends after combat            
             if myhero.y == curlevel.exity and myhero.x == curlevel.exitx:

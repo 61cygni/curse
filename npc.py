@@ -98,9 +98,11 @@ class Monster:
                                    # not caddy corner
         return False    
 
-    def attack(self, hero, stdscr):
-        my, mx = stdscr.getmaxyx()
-        stdscr.addstr(my - 1, mx - 40, "%s attacks! " % (self.name), self.color)
+    def display_killed(self):
+        self.curlevel.msg_queue.add("you killed %s! " % (self.name), 1)
+
+    def attack(self, hero):
+        self.curlevel.msg_queue.add("%s attacks! " % (self.name), 1)
 
         hero.gld += self.gld
         hero.exp += self.lvl + 1
