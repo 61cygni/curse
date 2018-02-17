@@ -18,6 +18,10 @@ class Hero(npc.Monster):
         self.y = self.curlevel.start[0]
         self.x = self.curlevel.start[1]
 
+    def reset_exit(self):
+        self.y = self.curlevel.exity
+        self.x = self.curlevel.exitx+1
+
     def display(self, stdscr):
         stdscr.attron(curses.A_BOLD)
         stdscr.addstr(self.y,self.x,self.char, self.color)
@@ -38,7 +42,7 @@ class Hero(npc.Monster):
                 self.x = self.x - 1
 
     def display_hud(self, stdscr):
-        stdscr.addstr(0, 0, "+----------------------------+", curses.color_pair(4)) 
-        stdscr.addstr(1, 0, "|lvl:%d exp:%d gold:%d hp:%d|" % \
+        stdscr.addstr(0, 0, "+-------------------------------------+", curses.color_pair(4)) 
+        stdscr.addstr(1, 0, "|lvl:%3d exp:%6d gold:%6d hp:%3d|" % \
            (self.lvl,self.exp,self.gld, self.hp), curses.color_pair(4)) 
-        stdscr.addstr(2, 0, "+----------------------------+", curses.color_pair(4)) 
+        stdscr.addstr(2, 0, "+-------------------------------------+", curses.color_pair(4)) 

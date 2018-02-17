@@ -162,7 +162,9 @@ class Level:
     def __add_exit(self):
         exit_room     = self.rooms[random.randint(0, len(self.rooms) - 1)]
         self.exity    = random.randint(exit_room[0],exit_room[2] - 1)
-        self.exitx    = random.randint(exit_room[1],exit_room[3] - 1)
+        # -2 to make sure there is room to place hero when she ascends
+        self.exitx    = random.randint(exit_room[1],exit_room[3] - 2) 
+        
         self.exitchar = 'V'
 
     def __add_start(self):

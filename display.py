@@ -8,8 +8,8 @@ def hero_hud_compact(stdscr):
 def dungeon_hud_compact(stdscr, level):
     height, width = stdscr.getmaxyx()
 
-    starty = height - 4
+    starty = height - 3
 
     stdscr.addstr(starty    , 0, "+-----------------+", curses.color_pair(2)) 
-    stdscr.addstr(starty + 1, 0, "|dungeon lvl:%d    |" % (level), curses.color_pair(2)) 
+    stdscr.addstr(starty + 1, 0, "|dungeon lvl:%3d  |" % (level), curses.color_pair(2)) 
     stdscr.addstr(starty + 2, 0, "+-----------------+", curses.color_pair(2)) 

@@ -150,6 +150,14 @@ def game_state_machine(stdscr, state_machine = 0):
                 drawme = False
                 continue
 
+            if levelindex and myhero.y == curlevel.starty and myhero.x == curlevel.startx:
+                levelindex -= 1
+                curlevel = levels[levelindex]
+                myhero.curlevel = curlevel
+                myhero.reset_exit()
+                drawme = False
+                continue
+
             # Print status HUD
             display.dungeon_hud_compact(stdscr, levelindex)
 
