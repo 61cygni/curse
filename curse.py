@@ -100,7 +100,7 @@ def game_state_machine(stdscr, state_machine = 0):
         if state_machine == 0:
             splash.draw_main_title(stdscr)
 
-            if k == ord(' '): 
+            if k == ord('n'): 
                 k = 'XXX'
                 stdscr.clear()
                 state_machine = 1
