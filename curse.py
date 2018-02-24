@@ -3,12 +3,15 @@ import getopt
 import curses
 import random
 
+import pickle
+
 import level
 import message
 import splash
 import display
 import npc
 import hero
+import curseconf
 
 import pickle
 
@@ -44,10 +47,12 @@ def game_state_machine(stdscr, state_machine = 0):
     # generate 100 levels
     levels = []
     for i in range(0, 99):
-        levels.append(level.Level(stdscr, msg_queue))
+        levels.append(level.Level(stdscr))
 
     levelindex = 0
     curlevel = levels[levelindex]    
+    curlevel.msg_queue = msg_queue
+    
     
     myhero    = hero.Hero(curlevel)
 
@@ -101,6 +106,14 @@ def game_state_machine(stdscr, state_machine = 0):
                 state_machine = 1
                 state_transition = True
                 continue
+            elif k == ord('l'):
+                fp = open(curseconf.SAVE_FILE, 'r')
+                (myhero, curlevel, levels) = pickle.load(fp)
+                fp.close()
+
+                curlevel.msg_queue = msg_queue
+                state_machine = 2
+                continue
 
         # --
         # Introduction splash screen 
@@ -121,10 +134,31 @@ def game_state_machine(stdscr, state_machine = 0):
         # Main game engine 
         # --
 
+        # Give the queue that manages messages to the screen some cycle
+        # time
         msg_queue.run()
 
 
         if state_machine == 2:    
+
+            if k == ord('s'):  # save the current game
+                fp = None
+
+                for alevel in levels:
+                    alevel.msg_queue = None
+
+                try:
+                    curlevel.msg_queue = None
+                    fp = open(curseconf.SAVE_FILE, 'wb')
+                    pickle.dump((myhero, curlevel, levels), fp)
+                    fp.close()
+
+                    msg_queue.add("Game saved", 2)
+                except Exception as e:
+                    msg_queue.add("Save file failed ", 2)
+                
+                curlevel.msg_queue = msg_queue
+                    
 
             if not drawme:
                 drawme = curlevel
@@ -156,6 +190,7 @@ def game_state_machine(stdscr, state_machine = 0):
             if myhero.y == curlevel.exity and myhero.x == curlevel.exitx:
                 levelindex += 1
                 curlevel = levels[levelindex]
+                curlevel.msg_queue = msg_queue
                 myhero.curlevel = curlevel
                 myhero.reset_start()
                 drawme = False
@@ -164,6 +199,7 @@ def game_state_machine(stdscr, state_machine = 0):
             if levelindex and myhero.y == curlevel.starty and myhero.x == curlevel.startx:
                 levelindex -= 1
                 curlevel = levels[levelindex]
+                curlevel.msg_queue = msg_queue
                 myhero.curlevel = curlevel
                 myhero.reset_exit()
                 drawme = False

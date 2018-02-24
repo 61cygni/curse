@@ -76,8 +76,9 @@ def room_overlap(r1, r2):
 
 class Level:
 
-    def __init__(self, stdscr, msg_queue):
-        self.msg_queue = msg_queue
+    def __init__(self, stdscr):
+
+        self.msg_queue = None 
 
         self.__create_level(stdscr.getmaxyx())
         self.__add_start() # Must be called after create_level!

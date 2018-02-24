@@ -1,2 +1,2 @@
 
-SAVE_FILE = "./curse.pkl"
+SAVE_FILE = "./.curse.pkl"

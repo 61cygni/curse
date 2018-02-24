@@ -13,7 +13,7 @@ def draw_main_title(stdscr):
     
     subtitle = "Press <space> to enter ..."[:width-1]
     if os.path.exists(curseconf.SAVE_FILE) and os.path.isfile(curseconf.SAVE_FILE) : 
-        subtitle = "<l> load game <n> new game ..."[:width-1]
+        subtitle = "<l> load previous game <n> new game ..."[:width-1]
 
     start_x_title = int((width // 2) - (len(title) // 2) - len(title) % 2)
     start_x_subtitle = int((width // 2) - (len(subtitle) // 2) - len(subtitle) % 2)
