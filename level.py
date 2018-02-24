@@ -3,6 +3,8 @@ import random
 import sys
 import npc
 
+import loot
+
 brick = '#'
 space = ' '
 
