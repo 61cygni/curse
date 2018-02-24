@@ -10,6 +10,8 @@ import display
 import npc
 import hero
 
+import pickle
+
 def game_state_machine(stdscr, state_machine = 0):
     k = 0
 

@@ -1,5 +1,7 @@
+import os
 import curses
 import message 
+import curseconf
 
 def draw_main_title(stdscr):
     
@@ -8,7 +10,10 @@ def draw_main_title(stdscr):
     height, width = stdscr.getmaxyx()
 
     title = "Curse"[:width-1]
-    subtitle = "Press <SPACE> to Enter ..."[:width-1]
+    
+    subtitle = "Press <space> to enter ..."[:width-1]
+    if os.path.exists(curseconf.SAVE_FILE) and os.path.isfile(curseconf.SAVE_FILE) : 
+        subtitle = "<l> load game <n> new game ..."[:width-1]
 
     start_x_title = int((width // 2) - (len(title) // 2) - len(title) % 2)
     start_x_subtitle = int((width // 2) - (len(subtitle) // 2) - len(subtitle) % 2)
@@ -33,7 +38,7 @@ def draw_exit_screen(stdscr):
     stdscr.clear()
     height, width = stdscr.getmaxyx()
 
-    title = "Are you sure you want to quit?"[:width-1]
+    title = "Ar you sure you want to quit?"[:width-1]
     subtitle = "y = quit, n = resume, m = main menu"[:width-1]
 
     start_x_title = int((width // 2) - (len(title) // 2) - len(title) % 2)
